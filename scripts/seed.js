@@ -1,5 +1,8 @@
-require('dotenv').config();
+//This file contains instructions for creating and seeding the invoices, customers, user, and revenue tables!
+// The script inside the seed.js file uses SQL to create tables and then populates them with data from the 
+// placeholder-data.js file <3
 
+require('dotenv').config();
 const { neon } = require('@neondatabase/serverless');
 const {
   invoices,

@@ -1,20 +1,21 @@
 import { sql } from '@vercel/postgres';
 import { formatCurrency } from './utils';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export async function fetchRevenue() {
   // Add noStore() here to prevent the response from being cached.
   // This is equivalent to in fetch(..., {cache: 'no-store'}).
-
+  noStore();
   try {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
 
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    console.log('Fetching revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+    console.log('Data fetch completed after 3 seconds.');
 
     return data.rows;
   } catch (error) {
@@ -24,6 +25,7 @@ export async function fetchRevenue() {
 }
 
 export async function fetchLatestInvoices() {
+  noStore();
   try {
     const data = await sql`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
@@ -42,8 +44,18 @@ export async function fetchLatestInvoices() {
     throw new Error('Failed to fetch the latest invoices.');
   }
 }
+//Code above executes an SQL query to select the latest invoices along with customer details (name, image_url, email) and 
+// invoice amount, ordered by invoices.date in descending order (DESC), limiting the result to five invoices 
+// (LIMIT 5)
+// Formats the invoice amounts using the formatCurrency function and maps each row to a new object containing
+//  formatted invoice data
+// If an error occurs during the database query, logs the error and throws a new error indicating the
+//  failure to fetch the latest invoices
+// Returns an array of objects representing the latest invoices with formatted amounts (amount)
+
 
 export async function fetchCardData() {
+  noStore();
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
@@ -84,7 +96,7 @@ export async function fetchFilteredInvoices(
   currentPage,
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-
+  noStore();
   try {
     const invoices = await sql`
       SELECT
@@ -115,6 +127,7 @@ export async function fetchFilteredInvoices(
 }
 
 export async function fetchInvoicesPages(query) {
+  noStore();
   try {
     const count = await sql`SELECT COUNT(*)
     FROM invoices
@@ -136,6 +149,7 @@ export async function fetchInvoicesPages(query) {
 }
 
 export async function fetchInvoiceById(id) {
+  noStore();
   try {
     const data = await sql`
       SELECT
@@ -179,6 +193,7 @@ export async function fetchCustomers() {
 }
 
 export async function fetchFilteredCustomers(query) {
+  noStore();
   try {
     const data = await sql`
 		SELECT

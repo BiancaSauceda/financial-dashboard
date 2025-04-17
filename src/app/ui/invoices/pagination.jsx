@@ -4,17 +4,30 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
+import { usePathname, useSearchParams } from 'next/navigation';
+
 
 export default function Pagination({ totalPages }) {
-  // NOTE: comment in this code when you get to this point in the course
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const allPages = generatePagination(currentPage, totalPages); 
 
-  // const allPages = generatePagination(currentPage, totalPages);
+  //step 5 no.4
+  const createPageURL = (pageNumber) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', pageNumber.toString());
+    return `${pathname}?${params.toString()}`;
+  };
+  //createPageURL creates an instance of the current search parameters.
+// Then, it updates the "page" parameter to the provided page number.
+// Finally, it constructs the full URL using the path name and updated search parameters!!!
 
   return (
     <>
       {/* NOTE: comment in this code when you get to this point in the course */}
 
-      {/* <div className="inline-flex">
+      <div className="inline-flex">
         <PaginationArrow
           direction="left"
           href={createPageURL(currentPage - 1)}
@@ -23,8 +36,8 @@ export default function Pagination({ totalPages }) {
 
         <div className="flex -space-x-px">
           {allPages.map((page, index) => {
-            let position: 'first' | 'last' | 'single' | 'middle' | undefined;
-
+            //smthn is wrong  w this shii well solve it later
+            //let position: 'first' | 'last' | 'single' | 'middle' | undefined;
             if (index === 0) position = 'first';
             if (index === allPages.length - 1) position = 'last';
             if (allPages.length === 1) position = 'single';
@@ -47,7 +60,7 @@ export default function Pagination({ totalPages }) {
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
         />
-      </div> */}
+      </div>
     </>
   );
 }
