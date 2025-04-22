@@ -1,6 +1,6 @@
 'use client';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { searchParams, usePathname, useRouter } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 
 export default function Search({ placeholder }) {
   const searchParams = useSearchParams();
@@ -8,9 +8,9 @@ export default function Search({ placeholder }) {
   const { replace } = useRouter();
 
   function handleSearch(term){
-    console.log(term);
-    params.set('page', '1');
+    //console.log(term);
     const params = new URLSearchParams(searchParams);
+    params.set('page', '1');
     //URLSearchParams is a Web API that gives utility methods for manipulating URL query params. 
     //Instead of making a super complex string literal, u can use it to get the params string like ?page=1&query=a.
     if(term){

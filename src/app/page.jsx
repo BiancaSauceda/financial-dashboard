@@ -33,8 +33,8 @@ export default function Page() {
           {/* Add Hero Images Here */}
             <Image
               src="/hero-desktop.png" //specifies path to img file
-              width={560} // sets dimensions of img
-              height={620} // same thang
+              width={1120} // sets dimensions of img
+              height={1240} // same thang
               className="block md:hidden" //adds Tailwind CSS classes to the img component!
               // block ensures that the image is displayed as a block element and md: hidden hides the image 
               // on screens larger than the medium breakpoint, making it visible only on mobile screens.

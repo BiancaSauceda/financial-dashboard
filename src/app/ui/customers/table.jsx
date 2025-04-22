@@ -3,9 +3,10 @@ import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
 
 
-export default async function CustomersTable({
-  customers,
-}) {
+export default async function CustomersTable({ customers }){
+   // Ensure customers is always an array to prevent TypeError
+   customers = customers || []; // Default to an empty array if undefined or null
+  
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>

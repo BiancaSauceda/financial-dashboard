@@ -37,7 +37,7 @@ export default function Pagination({ totalPages }) {
         <div className="flex -space-x-px">
           {allPages.map((page, index) => {
             //smthn is wrong  w this shii well solve it later
-            //let position: 'first' | 'last' | 'single' | 'middle' | undefined;
+            let position;
             if (index === 0) position = 'first';
             if (index === allPages.length - 1) position = 'last';
             if (allPages.length === 1) position = 'single';
